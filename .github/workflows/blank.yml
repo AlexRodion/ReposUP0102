@@ -32,3 +32,6 @@ jobs:
           name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
+      - name: Close Stale Issues
+        uses: actions/stale@v9.0.0
+
