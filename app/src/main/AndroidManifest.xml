@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/btpit"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/btpit"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BTPIT">
+        <activity
+            android:name="ru.netology.btpit.activity.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
