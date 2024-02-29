@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import ru.btpit.dto.Post
 
 interface PostRepository {
-    fun get(): LiveData<Post>
-    fun like()
-    fun share()
-
+    fun getAll(): LiveData<List<ru.btpit.dto.Post>>
+    fun likeById(id: Long)
+    fun save(post: ru.btpit.dto.Post)
+    fun removeById(id: Long)
 }
