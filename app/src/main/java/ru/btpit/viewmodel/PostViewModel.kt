@@ -1,8 +1,8 @@
-package ru.netology.btpit.viewmodel
+package ru.btpit.viewmodel
 
 import androidx.lifecycle.ViewModel
-import ru.netology.btpit.repository.PostRepository
-import ru.netology.btpit.repository.PostRepositoryInMemoryImpl
+import ru.btpit.repository.PostRepository
+import ru.btpit.repository.PostRepositoryInMemoryImpl
 
 class PostViewModel : ViewModel() {
 

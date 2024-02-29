@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:padding="@dimen/common_spacing"
-    tools:context="ru.netology.btpit.activity.MainActivity">
+    tools:context="ru.btpit.activity.MainActivity">
 
     <ImageView
         android:id="@+id/avatar"

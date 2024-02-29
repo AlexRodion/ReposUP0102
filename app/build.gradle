@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace "ru.netology.btpit"
+    namespace "ru.btpit"
     compileSdk 34
 
     defaultConfig {
-        applicationId "ru.netology.btpit"
+        applicationId "ru.btpit"
         minSdk 23
         targetSdk 34
         versionCode 1
