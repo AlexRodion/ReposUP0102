@@ -3,7 +3,6 @@ package ru.btpit.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ru.btpit.R
@@ -65,17 +64,19 @@ class MainActivity : AppCompatActivity() {
             viewModel.data .observe(this) { posts ->
                 adapter.submitList(posts)
             }
-
-            val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
-                    result ?: return@registerForActivityResult
-                    viewModel.changeContent(result)
-                    viewModel.save()
-                }
-
-            binding.fab?.setOnClickListener {
-                    newPostLauncher.launch()
-                }
+        viewModel.edited.observe(this) { post ->
+            if (post.id == 0L) {
+                return@observe
+            }
+            with(binding.content) {
+                this?.requestFocus()
+                this?.setText(post.content)
             }
         }
+
+
+    }
+
+}
 
 

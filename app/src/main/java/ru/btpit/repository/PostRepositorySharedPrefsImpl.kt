@@ -31,9 +31,9 @@ class PostRepositorySharedPrefsImpl(
             posts = listOf(
                 post.copy(
                     id = nextId++,
-                    author = "Me",
+                    author = "Я",
                     likedByMe = false,
-                    published = "now"
+                    published = "сейчас"
                 )
             ) + posts
             data.value = posts

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.btpit.dto.Post
+import ru.btpit.repository.PostRepository
 import ru.btpit.repository.PostRepositoryFileImpl
 
 
@@ -17,7 +18,7 @@ private val empty = Post(
 
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: ru.btpit.repository.PostRepository = PostRepositoryFileImpl(application)
+    private val repository: PostRepository = PostRepositoryFileImpl(application)
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
 
