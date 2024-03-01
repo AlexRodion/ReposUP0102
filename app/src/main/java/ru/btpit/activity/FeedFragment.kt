@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.btpit.R
-import ru.btpit.adapter.OnInteractionListener
-import ru.btpit.adapter.PostsAdapter
 import ru.btpit.databinding.FragmentFeedBinding
 import ru.btpit.dto.Post
 import ru.btpit.viewmodel.PostViewModel
@@ -34,19 +32,19 @@ class FeedFragment : Fragment() {
 
         val adapter = ru.btpit.adapter.PostsAdapter(object :
             ru.btpit.adapter.OnInteractionListener {
-            override fun onEdit(post: ru.btpit.dto.Post) {
+            override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }
 
-            override fun onLike(post: ru.btpit.dto.Post) {
+            override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
             }
 
-            override fun onRemove(post: ru.btpit.dto.Post) {
+            override fun onRemove(post: Post) {
                 viewModel.removeById(post.id)
             }
 
-            override fun onShare(post: ru.btpit.dto.Post) {
+            override fun onShare(post: Post) {
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, post.content)

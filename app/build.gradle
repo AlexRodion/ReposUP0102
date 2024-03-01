@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.test.ext:junit-ktx:1.1.5'
+    androidTestImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     def core_version = "1.12.0"
     def appcompat_version = "1.6.1"
     def mdc_version = "1.11.0"

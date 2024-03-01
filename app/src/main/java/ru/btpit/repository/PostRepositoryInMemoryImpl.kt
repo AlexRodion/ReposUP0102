@@ -12,23 +12,22 @@ class PostRepositoryInMemoryImpl : PostRepository {
             author = "БТПИТ. Техникум профессий будущего!",
             content = "Привет, это БТПИТ! Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста, присоединяйтесь → https://btpit36.ru",
             published = "19 февраля в 15:31",
-            likedByMe = false,
-            sharedByMe = false
+            likedByMe = false
         )
     ).reversed()
 
     private val data = MutableLiveData(posts)
-    override fun getAll(): LiveData<List<ru.btpit.dto.Post>> = data
+    override fun getAll(): LiveData<List<Post>> = data
 
-    override fun save(post: ru.btpit.dto.Post) {
+    override fun save(post: Post) {
         if (post.id == 0L) {
             // TODO: remove hardcoded author & published
             posts = listOf(
                 post.copy(
                     id = nextId++,
-                    author = "Me",
+                    author = "Я",
                     likedByMe = false,
-                    published = "now"
+                    published = "сейчас"
                 )
             ) + posts
             data.value = posts
