@@ -14,6 +14,7 @@ interface OnInteractionListener {
     fun onLike(post: Post) {}
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
+    fun onShare(post: Post) {}
 }
 
 class PostsAdapter(
@@ -40,9 +41,8 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            like.setImageResource(
-                if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-            )
+            like.isChecked = post.likedByMe
+            like.text = "${post.likes}"
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -66,6 +66,10 @@ class PostViewHolder(
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
+            }
+
+            share.setOnClickListener {
+                onInteractionListener.onShare(post)
             }
         }
     }
