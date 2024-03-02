@@ -22,6 +22,7 @@ class NewPostFragment : Fragment() {
         ownerProducer = ::requireParentFragment
     )
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

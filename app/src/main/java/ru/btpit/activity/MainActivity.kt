@@ -1,10 +1,14 @@
 package ru.btpit.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import ru.btpit.R
 import ru.btpit.adapter.OnInteractionListener
 import ru.btpit.adapter.PostsAdapter
@@ -19,20 +23,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        run{
-//            val preferences = getPreferences(Context.MODE_PRIVATE)
-//            preferences.edit().apply {
-//                putString("key", "value") // putX
-//                commit()
-//            }
-//        }
-//        run{
-//            getPreferences(Context.MODE_PRIVATE)
-//                .getString("key", "no value")?.let {
-//                    Snackbar.make(binding.root, it, BaseTransientBottomBar.LENGTH_INDEFINITE)
-//                        .show()
-//                }
-//        }
+        run {
+            val preferences = getPreferences(Context.MODE_PRIVATE)
+            preferences.edit().apply {
+                putString("key", "Error") // putX
+                commit() // commit - синхронно, apply - асинхронно
+            }
+        }
+
+       run {
+            getPreferences(Context.MODE_PRIVATE)
+                .getString("key", "no value")?.let {
+                    Snackbar.make(binding.root, it, BaseTransientBottomBar.LENGTH_INDEFINITE)
+                        .show()
+                }
+        }
+
+
 
         val viewModel: PostViewModel by viewModels()
 
@@ -69,14 +76,23 @@ class MainActivity : AppCompatActivity() {
             if (post.id == 0L) {
                 return@observe
             }
+            val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+                result ?: return@registerForActivityResult
+                viewModel.changeContent(result)
+                viewModel.save()
+            }
             with(binding.content) {
                 this?.requestFocus()
                 this?.setText(post.content)
+            }
+            binding.fab?.setOnClickListener {
+                newPostLauncher.launch()
             }
         }
 
     }
 
 }
+
 
 
