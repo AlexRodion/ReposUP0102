@@ -1,5 +1,4 @@
 package ru.btpit.repository
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.btpit.dao.PostDao
@@ -14,9 +13,7 @@ class PostRepositorySQLiteImpl (
         posts = dao.getAll()
         data.value = posts
     }
-
     override fun getAll(): LiveData<List<Post>> = data
-
     override fun save(post: Post){
         val id = post.id
         val saved = dao.save(post)
@@ -39,7 +36,6 @@ class PostRepositorySQLiteImpl (
         }
         data.value = posts
     }
-
     override fun removeById(id: Long) {
         dao.removeById(id)
         posts = posts.filter { it.id != id }

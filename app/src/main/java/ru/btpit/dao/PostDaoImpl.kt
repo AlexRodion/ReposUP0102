@@ -1,5 +1,4 @@
 package ru.btpit.dao
-
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -16,8 +15,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
             ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0
         );
-        """.trimIndent()
-    }
+        """.trimIndent() }
     object PostColumns {
         const val TABLE = "posts"
         const val COLUMN_ID = "id"
@@ -33,9 +31,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             COLUMN_PUBLISHED,
             COLUMN_LIKED_BY_ME,
             COLUMN_LIKES
-        )
-    }
-
+        ) }
     override fun getAll(): List<Post> {
         val posts = mutableListOf<Post>()
         db.query(
@@ -47,20 +43,14 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             null,
             "${PostColumns.COLUMN_ID} DESC"
         ).use {
-            while (it.moveToNext()) {
-                posts.add(map(it))
-            }
-        }
-        return posts
-    }
-
+            while (it.moveToNext()) { posts.add(map(it)) } }
+        return posts }
     override fun save(post: Post): Post {
         val values = ContentValues().apply {
             // TODO: remove hardcoded values
             put(PostColumns.COLUMN_AUTHOR, "Me")
             put(PostColumns.COLUMN_CONTENT, post.content)
-            put(PostColumns.COLUMN_PUBLISHED, "now")
-        }
+            put(PostColumns.COLUMN_PUBLISHED, "now") }
         val id = if (post.id != 0L) {
             db.update(
                 PostColumns.TABLE,
@@ -68,10 +58,8 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 "${PostColumns.COLUMN_ID} = ?",
                 arrayOf(post.id.toString()),
             )
-            post.id
-        } else {
-            db.insert(PostColumns.TABLE, null, values)
-        }
+            post.id }
+         else { db.insert(PostColumns.TABLE, null, values) }
         db.query(
             PostColumns.TABLE,
             PostColumns.ALL_COLUMNS,
@@ -82,10 +70,8 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             null,
         ).use {
             it.moveToNext()
-            return map(it)
-        }
+            return map(it) }
     }
-
     override fun likeById(id: Long) {
         db.execSQL(
             """
@@ -94,17 +80,13 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                likedByMe = CASE WHEN likedByMe THEN 0 ELSE 1 END
            WHERE id = ?;
         """.trimIndent(), arrayOf(id)
-        )
-    }
-
+        ) }
     override fun removeById(id: Long) {
         db.delete(
             PostColumns.TABLE,
             "${PostColumns.COLUMN_ID} = ?",
             arrayOf(id.toString())
-        )
-    }
-
+        ) }
     private fun map(cursor: Cursor): Post {
         with(cursor) {
             return Post(
@@ -114,7 +96,6 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 published = getString(getColumnIndexOrThrow(PostColumns.COLUMN_PUBLISHED)),
                 likedByMe = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKED_BY_ME)) != 0,
                 likes = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKES)),
-            )
-        }
+            ) }
     }
 }
