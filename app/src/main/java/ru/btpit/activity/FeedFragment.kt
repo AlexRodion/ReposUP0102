@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.btpit.R
+import ru.btpit.adapter.OnInteractionListener
+import ru.btpit.adapter.PostsAdapter
 import ru.btpit.databinding.FragmentFeedBinding
 import ru.btpit.dto.Post
 import ru.btpit.viewmodel.PostViewModel
@@ -30,8 +32,7 @@ class FeedFragment : Fragment() {
             false
         )
 
-        val adapter = ru.btpit.adapter.PostsAdapter(object :
-            ru.btpit.adapter.OnInteractionListener {
+        val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }

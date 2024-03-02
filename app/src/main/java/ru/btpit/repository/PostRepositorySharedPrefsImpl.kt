@@ -33,7 +33,8 @@ class PostRepositorySharedPrefsImpl(
                     id = nextId++,
                     author = "Я",
                     likedByMe = false,
-                    published = "сейчас"
+                    published = "сейчас",
+                    likes = 0
                 )
             ) + posts
             data.value = posts

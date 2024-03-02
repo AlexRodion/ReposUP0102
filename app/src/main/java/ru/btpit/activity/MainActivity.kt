@@ -12,6 +12,7 @@ import ru.btpit.databinding.ActivityMainBinding
 import ru.btpit.dto.Post
 import ru.btpit.viewmodel.PostViewModel
 
+
 class MainActivity : AppCompatActivity() {
     @SuppressLint("ApplySharedPref")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                 this?.setText(post.content)
             }
         }
-
 
     }
 

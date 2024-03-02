@@ -36,9 +36,10 @@ class PostRepositoryFileImpl(
             posts = listOf(
                 post.copy(
                     id = nextId++,
-                    author = "Me",
+                    author = "Я",
                     likedByMe = false,
-                    published = "now"
+                    published = "сейчас",
+                    likes = 0
                 )
             ) + posts
             data.value = posts
