@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ru.btpit.R
@@ -18,28 +20,37 @@ import ru.btpit.viewmodel.PostViewModel
 
 
 class MainActivity : AppCompatActivity() {
+    private var nextId = 1L
+    private var posts = listOf(
+        Post(
+            id = nextId++,
+            author = "БТПИТ. Техникум профессий будущего!",
+            content = "Привет, это БТПИТ! Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста, присоединяйтесь → https://btpit36.ru",
+            published = "19 февраля в 15:31",
+            likedByMe = false
+        ),
+        Post(
+            id = nextId++,
+            author = "БТПИТ. Техниум профессий будущего!",
+            content = " Приглашение на дизайн-лекторий → https://www.youtube.com/watch?v=WhWc3b3KhnY",
+            published = "28 февраля в 11:01",
+            likedByMe = false
+        ),
+        Post(
+            id = nextId++,
+            author = "БТПИТ. Техникум профессий будущего!",
+            content = "Вот и наступил первый день весны!",
+            published = "1 марта в 12:22",
+            likedByMe = false
+        )
+    ).reversed()
+    private val data = MutableLiveData(posts)
+    fun getAll(): LiveData<List<Post>> = data
     @SuppressLint("ApplySharedPref")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        run {
-            val preferences = getPreferences(Context.MODE_PRIVATE)
-            preferences.edit().apply {
-                putString("key", "Error") // putX
-                commit() // commit - синхронно, apply - асинхронно
-            }
-        }
-
-       run {
-            getPreferences(Context.MODE_PRIVATE)
-                .getString("key", "no value")?.let {
-                    Snackbar.make(binding.root, it, BaseTransientBottomBar.LENGTH_INDEFINITE)
-                        .show()
-                }
-        }
-
-
 
         val viewModel: PostViewModel by viewModels()
 
@@ -67,6 +78,7 @@ class MainActivity : AppCompatActivity() {
                         Intent.createChooser(intent, getString(R.string.chooser_share_post))
                     startActivity(shareIntent)
                 }
+
             })
             binding.list?.adapter = adapter
             viewModel.data .observe(this) { posts ->
