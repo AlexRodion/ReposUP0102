@@ -22,5 +22,11 @@
         android:id="@+id/newPostFragment"
         android:name="ru.btpit.activity.NewPostFragment"
         android:label="fragment_new_post"
-        tools:layout="@layout/fragment_new_post" />
+        tools:layout="@layout/fragment_new_post" >
+        <action
+            android:id="@+id/action_newPostFragment_pop"
+            app:destination="@id/feedFragment"
+            app:popUpTo="@id/newPostFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
