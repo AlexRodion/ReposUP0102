@@ -5,17 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.launch
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import ru.btpit.R
 import ru.btpit.adapter.OnInteractionListener
 import ru.btpit.adapter.PostsAdapter
 import ru.btpit.databinding.FragmentFeedBinding
+import ru.btpit.databinding.ActivityMainBinding
 import ru.btpit.dto.Post
 import ru.btpit.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
+
 
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
@@ -61,9 +66,14 @@ class FeedFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
         }
-
+        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+        }
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            newPostLauncher.launch()
         }
 
         return binding.root
